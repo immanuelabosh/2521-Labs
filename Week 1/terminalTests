@@ -1,0 +1,14 @@
+diff <(seq 10 | sort -n) <(seq 10 | ./useIntList)
+
+
+INPUTS
+seq 10 | sort -R
+seq 10 | sort -nr
+seq 10 | sort
+./randList 10 10
+
+SORTERS
+./useIntList
+sort -n
+
+seq 10 | sort -R | tee >(./useIntList) >(sort -n)

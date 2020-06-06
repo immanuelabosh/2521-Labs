@@ -103,14 +103,14 @@ void IntListInsertInOrder (IntList L, int v)
   
   //if the list is unsorted
   assert(IntListIsSorted(L));
-  /*
-	struct IntListNode *n = malloc (sizeof struct IntListNode);
-  n->data = v;
-  n->next = NULL;
-  */
+
+  //make new pointers
   struct IntListNode *n = newIntListNode (v);
   struct IntListNode *prev = NULL;
   struct IntListNode *curr = L->first;
+
+  //increment the size of the list since we're inserting a value
+  L->size++;
   
   //if the first node is null
   if (L->first == NULL) {

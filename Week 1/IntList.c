@@ -119,13 +119,13 @@ void IntListInsertInOrder (IntList L, int v)
       return;
   } 
   //if int is the smallest value
-  else if (L->first->data > n->data) {
+  else if (L->first->data >= v) {
     n->next = L->first;
     L->first = n;
     return;
   }
   //if int is the largest value
-  else if (v > L->last->data) {
+  else if (v >= L->last->data) {
     L->last->next = n;
     L->last = n;
     return;

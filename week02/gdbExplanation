@@ -1,0 +1,5 @@
+We ran make and gdb
+run
+print a
+print i
+print j 

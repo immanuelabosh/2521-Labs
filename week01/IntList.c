@@ -102,7 +102,7 @@ void IntListInsertInOrder (IntList L, int v)
 	assert (L != NULL);
   
   //if the list is unsorted
-  assert(IntListIsSorted(L));
+  //assert(IntListIsSorted(L));
 
   //make new pointers
   struct IntListNode *n = newIntListNode (v);
@@ -132,7 +132,7 @@ void IntListInsertInOrder (IntList L, int v)
   }
   //if int is anywhere else
   else {
-    while (v > curr->data && curr != NULL) {
+    while (v >= curr->data && curr != NULL) {
       prev = curr;
       curr = curr->next;
     }      

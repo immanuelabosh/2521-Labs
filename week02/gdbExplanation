@@ -1,5 +1,11 @@
-We ran make and gdb
 run
-print a
-print i
-print j 
+printed i and j
+i was 0 but j was very large
+Indicates J was stuck in a loop and was just looping forever
+line 39 j-- 
+
+
+print size
+print *q showed Head Tail and Size
+where showed the line which caused the 01s to keep repeating
+lines 65, 68, 77, 82

@@ -17,3 +17,19 @@ Queue.o:	Queue.c Queue.h
 clean:
 	-rm -f sorter sorter.o
 	-rm -f testQ testQ.o Queue.o
+
+.PHONY: bad
+bad: clean 
+	mv sorter.c sorter.c.good
+	mv sorter.c.bad sorter.c
+	mv Queue.c Queue.c.good
+	mv Queue.c.bad Queue.c
+
+.PHONY: good
+good: clean 
+	mv sorter.c sorter.c.bad
+	mv sorter.c.good sorter.c
+	mv Queue.c Queue.c.bad
+	mv Queue.c.good Queue.c
+
+

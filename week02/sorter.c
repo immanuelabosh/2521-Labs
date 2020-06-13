@@ -35,7 +35,7 @@ void sort (int a[], int n)
 	int i, j, nswaps;
 	for (i = 0; i < n; i++) {
 		nswaps = 0;
-    //change j++ to j--
+    //changed increment j to decrement j
 		for (j = n - 1; j > i; j--) {
 			if (a[j] < a[j - 1]) {
 				int tmp;

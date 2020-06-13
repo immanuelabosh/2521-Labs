@@ -61,14 +61,26 @@ void enterQueue (Queue q, Item it)
 	Link n = createNode (it);
 	if (q->head == NULL) {
 		q->head = n;
-	}
-	q->tail = n;
+	}else {
+    //if the queue isnt null add it to tail->next
+    q->tail->next = n;
+  }
+  //increment the size of the quese
+  q->size++;
+  q->tail = n;
 }
 
 // remove Item from head of Queue; return it
 Item leaveQueue (Queue q)
 {
 	assert (q != NULL);
+  //exit when attem[ts to delete item from empty queue
+  if(!(q->size > 0)) {
+    fprintf(stderr, "Cannot delete item from empty queue\n");
+    exit(EXIT_FAILURE);
+  }
+  //added an assert for q->size being more than 0
+  assert (q->size > 0);
 	Item it = q->head->item;
 	Link delNode = q->head;
 	q->head = q->head->next;
@@ -92,6 +104,8 @@ void showQueue (Queue q)
 	curr = q->head;
 	while (curr != NULL) {
 		printf (" %02d", curr->item);
+    //wasnt advancing the curr pointer so it endlessly printed 01
+    curr = curr->next;
 	}
 	printf (" T\n");
 }

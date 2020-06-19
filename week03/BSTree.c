@@ -110,7 +110,15 @@ int BSTreeNumNodes (BSTree t)
 // count #leaves in BSTree
 int BSTreeNumLeaves (BSTree t)
 {
-	return 0; // TODO
+  if (t == NULL) {
+        return 0;
+    } 
+    else if (t->right == NULL && t->left == NULL) {
+        return 1;
+    } 
+    else {
+        return BSTreeNumLeaves (t->right) + BSTreeNumLeaves(t->left);
+	}
 }
 
 

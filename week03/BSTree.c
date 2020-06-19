@@ -115,7 +115,9 @@ void BSTreeLevelOrder (BSTree t)
     //print it
     showBSTreeNode(current);
   }
-	return; // TODO
+  //free queue bcos it's empty
+  dropQueue(newQ);
+	return; 
 }
 
 

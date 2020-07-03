@@ -14,7 +14,7 @@
 typedef struct GraphRep {
    int   nV;    // #vertices
    int   nE;    // #edges
-   int **edges; // matrix of 0/1
+   List *edges; // matrix of 0/1
 } GraphRep;
 
 // check validity of Vertex
@@ -35,26 +35,21 @@ Edge mkEdge(Graph g, Vertex v, Vertex w)
 // are two vertices directly connected?
 bool adjacent(Graph g, Vertex v, Vertex w)
 {
-   assert(validV(g,v) && validV(g,w));
-    return (g->edges[v][w] != 0);
+  	assert(validV(g,v) && validV(g,w));
+		return (NULL != (ListSearch(g->edges[v],w)));
 }
 
 // create an empty graph
 Graph newGraph(int nV)
 {
    assert(nV > 0);
-   int **e = malloc(nV * sizeof(int *));
+	 //allocate memory for the initial array
+   List *e = malloc(nV * sizeof(List));
    assert(e != NULL);
    for (int i = 0; i < nV; i++) {
-#if 1
-      e[i] = calloc(nV, sizeof(int));
+		 //populate the array with lists
+      e[i] = newList();
       assert(e[i] != NULL);
-#else
-      e[i] = malloc(nV * sizeof(int));
-      assert(e[i] != NULL);
-      for (int j = 0; j < nV; j++)
-         e[i][j] = 0;
-#endif
    }
    Graph g = malloc(sizeof(GraphRep));
    assert(g != NULL);
@@ -80,9 +75,9 @@ void  insertE(Graph g, Edge e)
 {
    assert(g != NULL);
    assert(validV(g,e.v) && validV(g,e.w));
-   if (g->edges[e.v][e.w]) return;
-   g->edges[e.v][e.w] = 1;
-   g->edges[e.w][e.v] = 1;
+   if (NULL != (ListSearch(g->edges[e.v],e.w))) return;
+	 ListInsert(g->edges[e.v],e.w);
+	 ListInsert(g->edges[e.w],e.v);
    g->nE++;
 }
 
@@ -91,9 +86,9 @@ void  removeE(Graph g, Edge e)
 {
    assert(g != NULL);
    assert(validV(g,e.v) && validV(g,e.w));
-   if (!g->edges[e.v][e.w]) return;
-   g->edges[e.v][e.w] = 0;
-   g->edges[e.w][e.v] = 0;
+   if (NULL == (ListSearch(g->edges[e.v],e.w))) return;
+	 ListDelete(g->edges[e.v],e.w);
+	 ListDelete(g->edges[e.w],e.v);
    g->nE--;
 }
 
@@ -118,7 +113,7 @@ void dropGraph(Graph g)
 {
    assert(g != NULL);
    for (int i = 0; i < g->nV; i++)
-      free(g->edges[i]);
+      dropList(g->edges[i]);
    free(g->edges);
    free(g);
 }

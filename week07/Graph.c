@@ -110,5 +110,51 @@ void showGraph (Graph g, char **names)
 int findPath (Graph g, Vertex src, Vertex dest, int max, int *path)
 {
 	assert (g != NULL);
-	return 0; // never find a path ... you need to fix this
+	//Breadth First Search according to slides
+	int visited [g->nV - 1];
+	for(int i = 0; i < g->nV; i++){
+		visited[i] = -1;
+	}
+	int found = 0;
+	visited[src] = src;
+	Queue q = newQueue();
+	QueueJoin(q, src);
+	while (found == 0 && QueueIsEmpty(q) == 0){
+		Vertex v = QueueLeave(q);
+		if (v == dest){
+			found = 1;
+		}else {
+			for (Vertex w = 0; w < g->nV - 1; w++){
+				if (visited[w] == -1 && g->edges[v][w] < max){
+					visited[w] = v;
+					QueueJoin(q, w);
+				}
+			}
+		}
+	}
+	if (found == 1) {
+		Vertex tempV = dest;
+		int layover = 0;
+		//make path from dest to src
+		while (tempV != src) {
+			path[layover] = tempV;
+			tempV = visited[tempV];
+			layover++;
+		}
+		//put source at the end
+		path[layover] = src;
+		//reverse array to be from src to dest
+		int end = layover;
+		for (int i = 0; i < end; i++){
+			tempV = path[i];
+			path[i] = path[end];
+			path[end] = tempV;
+			end--;
+		}
+		//increment last array pos to make array size
+		layover++;
+		return layover;
+	}
+
+	return 0; // no path 
 }
